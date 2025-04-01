@@ -11,7 +11,10 @@
             --secondary-color: #ffffff;
             --text-color: #333;
             --background-color: #f9f9f9;
-            --white: #ffffff;
+            --accent-color: #ff6b6b;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(45deg, #F28C38, #ff6b6b);
+            --whatsapp-color: #25D366;
         }
 
         * {
@@ -19,32 +22,135 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
+            overflow-x: hidden;
+            cursor: none;
+            position: relative;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Navbar Styles */
-        .navbar {
+        /* Page Loader */
+        .page-loader {
             position: fixed;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #690d05;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .magic-loader {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            animation: spin 2s infinite linear;
+        }
+
+        .magic-loader::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--secondary-color);
+            animation: spin 1.5s infinite ease;
+        }
+
+        .magic-loader::after {
+            content: '✨ MAGIC KICHEN✨';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: var(--secondary-color);
+            animation: sparkleLoader 1s infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes sparkleLoader {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, opacity 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.expand {
+            transform: scale(2);
+            opacity: 0.8;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.2s ease;
+            opacity: 0.6;
+            background: radial-gradient(circle, rgba(242, 140, 56, 0.2), transparent);
+        }
+
+        .cursor-follower.expand {
+            transform: scale(1.5);
+            border-color: var(--accent-color);
+            opacity: 0.9;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 5%;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 1000;
-            transition: all 0.3s ease;
-            background-color: rgba(0,0,0,0.5);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         .navbar.scrolled {
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 0.8rem 5%;
+            box-shadow: 0 8px 25px var(--shadow-color);
         }
 
         .navbar-logo {
@@ -53,6 +159,11 @@
             gap: 0.75rem;
             text-decoration: none;
             color: var(--secondary-color);
+            transition: transform 0.4s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .navbar-logo img {
@@ -60,58 +171,62 @@
             height: 50px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--primary-color);
-            transition: transform 0.3s ease;
+            transition: all 0.6s ease;
         }
 
         .navbar-logo:hover img {
-            transform: scale(1.1) rotate(5deg);
+            transform: rotate(360deg);
+            border-color: var(--accent-color);
         }
 
         .navbar-logo span {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .navbar-menu {
             display: flex;
-            align-items: center;
-            gap: 1.5rem;
+            gap: 2rem;
             list-style: none;
         }
 
         .navbar-menu li a {
             text-decoration: none;
-            color: #ffffff;
-            font-weight: 500;
+            color: var(--secondary-color);
+            font-weight: 600;
             position: relative;
-            transition: color 0.3s ease;
+            transition: all 0.4s ease;
+            padding: 0.5rem 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .navbar-menu li a i {
-            font-size: 1.2rem;
+        .navbar-menu li a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px) scale(1.05);
         }
 
         .navbar-menu li a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 0;
-            height: 2px;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .navbar-menu li a:hover {
-            color: var(--primary-color);
+            height: 3px;
+            background: var(--gradient);
+            transition: width 0.4s ease;
         }
 
         .navbar-menu li a:hover::after {
-            width: 100%;
+            width: 80%;
         }
 
         .navbar-toggle {
@@ -119,29 +234,67 @@
             background: none;
             border: none;
             color: var(--secondary-color);
-            font-size: 1.75rem;
+            font-size: 2rem;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .navbar-toggle:hover {
-            color: var(--primary-color);
+            transform: rotate(90deg);
         }
 
-        /* Hero Section Styles */
+        /* Consistent Heading Styling */
+        .section-heading {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--gradient);
+            border-radius: 5px;
+        }
+
+        .small-heading {
+            font-size: 1.3rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 50px;
+            font-style: italic;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Hero Section with Video */
         .hero {
             height: 100vh;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
             color: white;
             padding-top: 80px;
             overflow: hidden;
         }
 
-        .hero-slider {
+        .hero-video {
             position: absolute;
             top: 0;
             left: 0;
@@ -150,99 +303,138 @@
             z-index: -1;
         }
 
-        .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .hero-video-bg {
             width: 100%;
             height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease;
-            background-size: cover;
-            background-position: center;
+            object-fit: cover;
+            filter: brightness(100%) contrast(110%);
+            transition: transform 0.5s ease;
         }
 
-        .hero-slide.active {
-            opacity: 1;
-        }
-
-        .hero-slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+        .hero:hover .hero-video-bg {
+            transform: scale(1.05);
         }
 
         .hero-content {
-            position: relative;
-            max-width: 800px;
+            text-align: center;
+            max-width: 1000px;
             padding: 0 20px;
-            z-index: 1;
+            position: relative;
+            z-index: 2;
+            animation: slideUp 1.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(100px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-content h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         .hero-social {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
+            gap: 20px;
+            margin-top: 40px;
         }
 
-        .hero-social a {
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             color: white;
-            font-size: 2.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            display: inline-block;
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .hero-social a::before {
+        .social-icon.facebook { background: #1877F2; }
+        .social-icon.instagram {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+        .social-icon.linkedin { background: #0A66C2; }
+
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .social-icon.facebook:hover { background: #1566d8; }
+        .social-icon.instagram:hover {
+            background: radial-gradient(circle at 30% 107%, #fff497 0%, #fff497 5%, #ff5949 45%, #e6249f 60%, #385AEB 90%);
+        }
+        .social-icon.linkedin:hover { background: #0957a8; }
+
+        .social-icon i {
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover i {
+            transform: scale(1.2);
+        }
+
+        /* About Section with Enhanced Magic Effect */
+        .about {
+            padding: 120px 0;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 3px;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .hero-social a:hover::before {
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(242, 140, 56, 0.1), rgba(255, 107, 107, 0.1));
+            z-index: 0;
+            pointer-events: none;
         }
 
-        .hero-social .facebook { color: #3b5998; }
-        .hero-social .instagram {
-            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .hero-social .twitter { color: #1da1f2; }
-        .hero-social .linkedin { color: #0077b5; }
-
-        .hero-social a:hover {
-            transform: translateY(-5px) scale(1.1);
+        .magic-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        /* About Section Styles */
-        .about {
-            padding: 100px 0;
-            background-color: white;
+        .magic-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(242, 140, 56, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(242, 140, 56, 0.8), 
+                       0 0 25px rgba(255, 107, 107, 0.6);
+            animation: sparkleEnhanced 4s infinite ease-in-out, 
+                       float 6s infinite ease-in-out;
+        }
+
+        @keyframes sparkleEnhanced {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
+            20% { transform: scale(1.3) rotate(90deg); opacity: 1; }
+            80% { transform: scale(0.8) rotate(180deg); opacity: 0.8; }
+            100% { transform: scale(0.5) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+            100% { transform: translateY(0); }
         }
 
         .about-container {
@@ -252,29 +444,36 @@
             margin: 0 auto;
             gap: 60px;
             padding: 0 20px;
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 1s ease-out;
+            position: relative;
+            z-index: 2;
         }
 
-        .about-image {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        .about-container.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .about-image img {
             width: 100%;
             height: 500px;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px var(--shadow-color);
+            transition: transform 0.6s ease;
         }
 
         .about-image:hover img {
-            transform: scale(1.1);
+            transform: scale(1.08) rotate(2deg);
         }
 
         .about-content {
-            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 600px;
         }
 
         .about-content h2 {
@@ -282,171 +481,426 @@
             color: var(--primary-color);
             margin-bottom: 25px;
             position: relative;
-            padding-bottom: 15px;
+            animation: slideInLeft 1s ease-out;
         }
 
         .about-content h2::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -10px;
             left: 0;
-            width: 80px;
+            width: 100px;
             height: 4px;
-            background-color: var(--primary-color);
+            background: var(--gradient);
+            animation: expandLine 1.5s ease-out forwards;
+        }
+
+        @keyframes expandLine {
+            0% { width: 0; }
+            100% { width: 100px; }
         }
 
         .about-content p {
             margin-bottom: 20px;
-            line-height: 1.8;
             color: #555;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: justify;
+            animation: fadeInUp 1.2s ease-out 0.3s forwards;
+            opacity: 0;
         }
 
-        .about-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            text-align: center;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .about-stat {
-            flex: 1;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .about-stat:hover {
-            transform: translateY(-10px);
-        }
-
-        .about-stat h3 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .about-stat p {
-            color: #777;
-            margin: 0;
+        .about-content .btn-primary {
+            align-self: flex-start;
+            margin-top: 20px;
         }
 
         /* Services Section */
         .services {
-            padding: 80px 0;
-            background-color: var(--background-color);
+            padding: 120px 0;
+            background: var(--background-color);
             text-align: center;
-        }
-
-        .services h2 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .services .small-heading {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 40px;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 0 20px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px var(--shadow-color);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .services-grid.visible .service-card {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .service-card:nth-child(1) { transition-delay: 0.1s; }
+        .service-card:nth-child(2) { transition-delay: 0.2s; }
+        .service-card:nth-child(3) { transition-delay: 0.3s; }
+        .service-card:nth-child(4) { transition-delay: 0.4s; }
+        .service-card:nth-child(5) { transition-delay: 0.5s; }
+        .service-card:nth-child(6) { transition-delay: 0.6s; }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-20px) scale(1.03);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.6s ease;
+        }
+
+        .service-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .service-card h3 {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .service-card p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* 3D Food Model Section */
+        .food-model-section {
+            padding: 120px 0;
+            background: linear-gradient(135deg, #fff, #f9f9f9);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .food-model-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            perspective: 1000px;
+        }
+
+        .food-model {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin: 0 auto;
+            transform-style: preserve-3d;
+            animation: rotateModel 20s infinite linear;
+        }
+
+        .food-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.5s ease;
+        }
+
+        .food-item:hover {
+            transform: scale(1.1) translateZ(50px);
+        }
+
+       
+        .food1 { transform: translateZ(50px); background-image: url('../event/images/3D.webp'); }
+        .food2 { transform: translateZ(100px) rotateY(45deg); background-image: url('../event/images/3D1.webp'); }
+        .food3 { transform: translateZ(150px) rotateY(-45deg); background-image: url('../event/images/3D3.webp'); }
+
+        @keyframes rotateModel {
+            0% { transform: rotateY(0deg) rotateX(20deg); }
+            100% { transform: rotateY(360deg) rotateX(20deg); }
+        }
+
+        /* Updated Clients Section with 3D Slider */
+        .clients {
+            padding: 120px 0;
+            background: var(--background-color);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clients-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            perspective: 1000px;
+            height: 300px;
+            position: relative;
+        }
+
+        .clients-slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: rotateSlider 20s infinite linear;
+        }
+
+        .client-logo {
+            position: absolute;
+            width: 200px;
+            height: 120px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px var(--shadow-color);
+            transition: all 0.5s ease;
+            transform-origin: center center;
+        }
+
+        .client-logo:hover {
+            transform: scale(1.1) translateZ(50px) !important;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .client-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 15px;
+            transition: all 0.5s ease;
+        }
+
+        .client-logo:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
+        .client-logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .client-logo:hover::before {
+            transform: scaleX(1);
+        }
+
+        @keyframes rotateSlider {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 120px 0;
+            background: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        .service-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+        .testimonial-card {
+            background: var(--secondary-color);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px var(--shadow-color);
+            overflow: hidden;
+            position: relative;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .testimonials-container.visible .testimonial-card {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .testimonial-card:nth-child(1) { transition-delay: 0.1s; }
+        .testimonial-card:nth-child(2) { transition-delay: 0.3s; }
+        .testimonial-card:nth-child(3) { transition-delay: 0.5s; }
+
+        .testimonial-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+        }
+
+        .testimonial-image {
+            position: relative;
+            height: 220px;
             overflow: hidden;
         }
 
-        .service-card:hover {
-            transform: translateY(-10px);
+        .testimonial-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
         }
 
-        .service-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
+        .testimonial-card:hover .testimonial-image img {
+            transform: scale(1.1);
+        }
+
+        .testimonial-content {
+            padding: 30px;
+            text-align: left;
+            background: linear-gradient(to top, rgba(242, 140, 56, 0.05), transparent);
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-content p::before {
+            content: '“';
+            font-size: 4rem;
+            color: var(--primary-color);
+            position: absolute;
+            top: -30px;
+            left: -15px;
+            opacity: 0.2;
+        }
+
+        .testimonial-content h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .testimonial-content span {
+            font-size: 1rem;
+            color: #777;
+            display: block;
             margin-bottom: 15px;
         }
 
-        .service-card h3 {
-            font-size: 1.5rem;
+        .testimonial-rating {
             color: var(--primary-color);
-            margin-bottom: 10px;
+            font-size: 1.3rem;
+            display: flex;
+            gap: 5px;
+            animation: starPulse 2s infinite;
         }
 
-        .service-card p {
-            font-size: 1rem;
-            color: #555;
-            line-height: 1.6;
+        @keyframes starPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .testimonial-rating i {
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover .testimonial-rating i {
+            transform: scale(1.2);
         }
 
         /* Gallery Section */
         .gallery {
-            padding: 80px 0;
-            background-color: white;
-        }
-
-        .gallery h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 40px;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .gallery h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background-color: var(--primary-color);
+            padding: 120px 0;
+            background: white;
         }
 
         .gallery-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 40px auto 0;
             padding: 0 20px;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: all 0.5s ease;
             aspect-ratio: 1/1;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .gallery-container.visible .gallery-item {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-item:nth-child(1) { transition-delay: 0.1s; }
+        .gallery-item:nth-child(2) { transition-delay: 0.2s; }
+        .gallery-item:nth-child(3) { transition-delay: 0.3s; }
+        .gallery-item:nth-child(4) { transition-delay: 0.4s; }
+        .gallery-item:nth-child(5) { transition-delay: 0.5s; }
+        .gallery-item:nth-child(6) { transition-delay: 0.6s; }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s ease;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
 
         .gallery-overlay {
@@ -454,11 +908,11 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 25px;
             color: white;
             transform: translateY(100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.5s ease;
         }
 
         .gallery-item:hover .gallery-overlay {
@@ -466,39 +920,19 @@
         }
 
         .gallery-overlay h3 {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 10px;
         }
 
         .gallery-overlay p {
-            font-size: 0.9rem;
-            margin: 0;
+            font-size: 1rem;
         }
 
         /* Map Section */
         .map-section {
-            padding: 80px 0;
-            background-color: var(--background-color);
-            position: relative;
-        }
-
-        .map-section h2 {
+            padding: 120px 0;
+            background: var(--background-color);
             text-align: center;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .map-section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background-color: var(--primary-color);
         }
 
         .map-container {
@@ -507,115 +941,111 @@
             margin: 0 auto;
             padding: 0 20px;
             height: 500px;
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 40px var(--shadow-color);
+            transition: all 0.5s ease;
+        }
+
+        .map-container:hover {
+            transform: scale(1.02);
         }
 
         .map-iframe {
             width: 100%;
             height: 100%;
             border: none;
-            filter: grayscale(20%) contrast(110%) saturate(120%);
-            transition: all 0.5s ease;
+            filter: grayscale(30%) contrast(110%);
+            transition: all 0.6s ease;
         }
 
-        .map-iframe:hover {
-            filter: grayscale(0%) contrast(100%) saturate(100%);
+        .map-container:hover .map-iframe {
+            filter: grayscale(0%) contrast(100%);
         }
 
         .map-overlay {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 80%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            max-width: 90%;
+            transition: all 0.4s ease;
+        }
+
+        .map-overlay:hover {
+            transform: translateX(-50%) scale(1.05);
         }
 
         .map-overlay h3 {
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
         }
 
         .map-overlay p {
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
         .map-overlay a {
             display: inline-block;
-            margin-top: 10px;
-            padding: 8px 20px;
-            background-color: var(--primary-color);
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: var(--gradient);
             color: white;
             text-decoration: none;
-            border-radius: 30px;
-            transition: all 0.3s ease;
+            border-radius: 50px;
+            transition: all 0.4s ease;
         }
 
         .map-overlay a:hover {
-            background-color: #e57522;
-            transform: translateY(-3px);
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            padding: 80px 0;
-            background-color: white;
-            text-align: center;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .portfolio-item {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .portfolio-item:hover {
-            transform: scale(1.05);
-        }
-
-        .portfolio-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(242, 140, 56, 0.5);
         }
 
         /* Contact Section */
         .contact {
-            padding: 80px 0;
-            background-color: var(--background-color);
+            padding: 120px 0;
+            background: var(--background-color);
             text-align: center;
         }
 
         .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 700px;
+            margin: 40px auto 0;
+            padding: 0 20px;
             display: grid;
-            gap: 20px;
+            gap: 25px;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 1s ease-out;
+        }
+
+        .contact-form.visible {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         .contact-form input,
         .contact-form textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            transition: all 0.4s ease;
+            font-size: 1.1rem;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
         }
 
         .contact-form textarea {
@@ -623,46 +1053,190 @@
         }
 
         .btn-primary {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--primary-color);
+            padding: 15px 40px;
+            background: var(--gradient);
             color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            transition: all 0.3s ease;
             border: none;
+            border-radius: 50px;
             cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(242, 140, 56, 0.3);
+            font-size: 1.2rem;
         }
 
         .btn-primary:hover {
-            background-color: #e57522;
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(242, 140, 56, 0.5);
         }
 
         /* Footer */
         footer {
-            background-color: #333;
+            background: #222;
             color: white;
-            text-align: center;
-            padding: 20px;
+            padding: 50px 20px;
+            position: relative;
         }
 
-        /* Responsive Styles */
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 50px;
+            padding-bottom: 40px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .footer-logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            transition: transform 0.5s ease;
+        }
+
+        .footer-logo:hover img {
+            transform: rotate(360deg);
+        }
+
+        .footer-logo span {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .footer-social a {
+            color: white;
+            font-size: 2.2rem;
+            transition: all 0.4s ease;
+        }
+
+        .footer-social a:hover {
+            transform: scale(1.3) rotate(8deg);
+            color: var(--primary-color);
+        }
+
+        .footer-links h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary-color);
+            padding-left: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1rem;
+            color: #bbb;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: var(--whatsapp-color);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .whatsapp-btn i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .whatsapp-tooltip {
+            position: absolute;
+            right: 70px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover .whatsapp-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-10px);
+        }
+
+        /* Responsive Design */
         @media screen and (max-width: 768px) {
             .navbar-menu {
                 display: none;
                 flex-direction: column;
-                width: 100%;
                 position: absolute;
                 top: 100%;
                 left: 0;
-                background-color: rgba(0,0,0,0.9);
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                padding: 1rem;
+                width: 100%;
+                background: rgba(0,0,0,0.95);
+                padding: 2rem;
+                transform: translateY(-20px);
+                opacity: 0;
+                transition: all 0.5s ease;
             }
 
             .navbar-menu.active {
                 display: flex;
+                transform: translateY(0);
+                opacity: 1;
             }
 
             .navbar-toggle {
@@ -673,20 +1247,64 @@
                 font-size: 2.5rem;
             }
 
-            .about-container {
-                flex-direction: column;
-                gap: 30px;
+            .hero-social {
+                gap: 15px;
+                margin-top: 30px;
             }
 
-            .about-stats {
+            .social-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+
+            .section-heading {
+                font-size: 1.5rem;
+            }
+
+            .about-container {
                 flex-direction: column;
-                gap: 20px;
+                gap: 40px;
+            }
+
+            .about-image img {
+                height: 350px;
+            }
+
+            .about-content h2 {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .about-content p {
+                text-align: center;
+            }
+
+            .about-content .btn-primary {
+                align-self: center;
             }
 
             .services-grid,
-            .portfolio-grid,
-            .gallery-container {
+            .gallery-container,
+            .testimonials-container {
                 grid-template-columns: 1fr;
+            }
+
+            .clients-container {
+                height: 250px;
+            }
+
+            .client-logo {
+                width: 150px;
+                height: 90px;
+            }
+
+            .testimonial-image {
+                height: 180px;
+            }
+
+            .map-container {
+                height: 400px;
             }
 
             .map-overlay {
@@ -694,273 +1312,284 @@
                 bottom: auto;
                 left: auto;
                 transform: none;
-                max-width: 100%;
                 margin-top: 20px;
             }
 
-            .map-container {
-                height: 300px;
-            }
-        }
-
-        .destination-wedding {
-            padding: 80px 0;
-            background-color: white;
-        }
-
-        .destination-wedding .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .destination-wedding .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .destination-wedding .section-header h2 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .destination-wedding .section-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background-color: var(--primary-color);
-        }
-
-        .destination-wedding .section-header p {
-            color: #666;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .destination-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .destination-item {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .destination-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .destination-image {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .destination-image img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .destination-item:hover .destination-image img {
-            transform: scale(1.1);
-        }
-
-        .destination-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .destination-overlay h4 {
-            color: white;
-            font-size: 1.2rem;
-            margin: 0;
-        }
-
-        .destination-cta {
-            text-align: center;
-        }
-
-        @media screen and (max-width: 768px) {
-            .destination-grid {
+            .footer-container {
                 grid-template-columns: 1fr;
+                text-align: center;
             }
 
-            .destination-wedding .section-header h2 {
-                font-size: 2rem;
+            .footer-social {
+                justify-content: center;
+            }
+
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .whatsapp-btn {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .whatsapp-btn i {
+                font-size: 1.8rem;
+            }
+            
+            .whatsapp-float:hover .whatsapp-tooltip {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="magic-loader"></div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
     <nav class="navbar">
         <a href="#" class="navbar-logo">
             <img src="./images/magic.jpg" alt="Magic Kitchen Logo">
             <span>Magic Kitchen</span>
         </a>
-
         <button class="navbar-toggle" aria-label="Toggle Menu">
             <i class="ri-menu-line"></i>
         </button>
-
         <ul class="navbar-menu">
             <li><a href="#home"><i class="ri-home-line"></i>Home</a></li>
             <li><a href="#about"><i class="ri-info-line"></i>About</a></li>
             <li><a href="#services"><i class="ri-service-line"></i>Services</a></li>
+            <li><a href="#food-model"><i class="ri-restaurant-line"></i>Culinary</a></li>
             <li><a href="#gallery"><i class="ri-image-line"></i>Gallery</a></li>
-           
+            <li><a href="#clients"><i class="ri-group-line"></i>Clients</a></li>
+            <li><a href="#testimonials"><i class="ri-chat-quote-line"></i>Testimonials</a></li>
             <li><a href="#contact"><i class="ri-contacts-line"></i>Contact</a></li>
         </ul>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-slider">
-            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop')"></div>
-            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=500&auto=format&fit=crop&q=60')"></div>
-            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481?q=80&w=2070&auto=format&fit=crop')"></div>
+        <div class="hero-video">
+            <video autoplay muted loop playsinline class="hero-video-bg">
+                <source src="./images/VIDEO3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-overlay"></div>
         </div>
         <div class="hero-content">
             <h1>Magic Kitchen: Crafting Extraordinary Experiences</h1>
-            <p>Transforming Ordinary Moments into Magical Memories</p>
             <div class="hero-social">
-                <a href="#" target="_blank" class="facebook"><i class="ri-facebook-fill"></i></a>
-                <a href="#" target="_blank" class="instagram"><i class="ri-instagram-line"></i></a>
-              
-                <a href="#" target="_blank" class="linkedin"><i class="ri-linkedin-fill"></i></a>
+                <a href="#" target="_blank" class="social-icon facebook"><i class="ri-facebook-fill"></i></a>
+                <a href="#" target="_blank" class="social-icon instagram"><i class="ri-instagram-line"></i></a>
+                <a href="#" target="_blank" class="social-icon linkedin"><i class="ri-linkedin-fill"></i></a>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="about">
+        <h2 class="section-heading">Our Magic Kitchen Story</h2>
+        <div class="magic-particles" id="magic-particles"></div>
         <div class="about-container">
             <div class="about-image">
                 <img src="https://images.pexels.com/photos/3947955/pexels-photo-3947955.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Magic Kitchen Team">
             </div>
             <div class="about-content">
-                <h2>Our Magic Kitchen Story</h2>
-                <p>Magic Kitchen is more than an event management company – we're dream weavers, moment creators, and experience architects. Founded by a team of passionate professionals, we believe that every event is a unique canvas waiting to be transformed into a masterpiece.</p>
-                
-                <p>Our journey began with a simple philosophy: events are not just gatherings, they're stories waiting to be told. We blend creativity, precision, and a touch of magic to turn your vision into an unforgettable experience.</p>
-                
-                <p>From intimate celebrations to grand corporate events, we approach each project with the same level of dedication and creativity. Our team comprises event designers, logistical experts, and creative visionaries who work in perfect harmony.</p>
-                
-                <a href="#contact" class="btn-primary" style="margin-top: 30px;">Start Your Journey</a>
+                <p>At Magic Kitchen, we believe that great food and beautiful celebrations bring people together. Our journey began with a passion for creating unforgettable dining experiences, and over the years, we have grown into a trusted name in catering, event hosting, and decorations. Nestled in Nilambur, Kerala, our team is dedicated to bringing a touch of magic to every occasion. Whether it’s an intimate gathering or a grand celebration, we ensure top-quality service, exquisite flavors, and elegant arrangements.</p>
+                <a href="#contact" class="btn-primary">Start Your Journey</a>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="services">
-        <h2>Services by Magic Kitchen</h2>
+        <h2 class="section-heading">Services by Magic Kitchen</h2>
         <p class="small-heading">Crafting Events with a Touch of Magic</p>
         <div class="services-grid">
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=2070&auto=format&fit=crop" alt="Corporate Event Management">
                 <h3>Corporate Event Management</h3>
-                <p>Professional, polished gatherings to elevate your brand and engage your audience.</p>
+                <p>Professional gatherings to elevate your brand.</p>
             </div>
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1524777313293-86d2ab467344?q=80&w=2070&auto=format&fit=crop" alt="Wedding Planners">
                 <h3>Wedding Planners</h3>
-                <p>Turning your dream wedding into reality with elegance and precision.</p>
+                <p>Turning your dream wedding into reality.</p>
             </div>
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1629744418692-345355518e78?q=80&w=2070&auto=format&fit=crop" alt="Destination Wedding in Kerala">
-                <h3>Destination Wedding in Kerala</h3>
-                <p>Exotic weddings in Kerala's lush landscapes, blending tradition and beauty.</p>
+                <img src="https://images.unsplash.com/photo-1629744418692-345355518e78?q=80&w=2070&auto=format&fit=crop" alt="Destination Wedding">
+                <h3>Destination Wedding</h3>
+                <p>Exotic weddings in stunning landscapes.</p>
             </div>
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2070&auto=format&fit=crop" alt="Private Parties">
                 <h3>Private Parties</h3>
-                <p>Unforgettable celebrations customized for every occasion and guest list.</p>
+                <p>Unforgettable customized celebrations.</p>
             </div>
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1629744418692-345355518e78?q=80&w=2070&auto=format&fit=crop" alt="Beach Weddings">
                 <h3>Beach Weddings</h3>
-                <p>Romantic seaside ceremonies with waves as your backdrop.</p>
+                <p>Romantic seaside ceremonies.</p>
             </div>
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=2070&auto=format&fit=crop" alt="Music & Entertainment">
                 <h3>Music & Entertainment</h3>
-                <p>Energize your event with top-tier performances and immersive experiences.</p>
+                <p>Top-tier performances for your event.</p>
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
+    <section id="food-model" class="food-model-section">
+        <h2 class="section-heading">Our Culinary Magic</h2>
+        <p class="small-heading">Experience Our Craft in 3D</p>
+        <div class="food-model-container">
+            <div class="food-model">
+                <div class="food-item plate"></div>
+                <div class="food-item food1"></div>
+                <div class="food-item food2"></div>
+                <div class="food-item food3"></div>
+            </div>
+        </div>
+    </section>
+
     <section id="gallery" class="gallery">
-        <h2>Our Gallery</h2>
+        <h2 class="section-heading">Our Gallery</h2>
         <div class="gallery-container">
             <div class="gallery-item">
                 <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=2070&auto=format&fit=crop" alt="Wedding Decoration">
                 <div class="gallery-overlay">
                     <h3>Elegant Wedding Setup</h3>
-                    <p>Beautiful floral arrangements for a romantic evening</p>
+                    <p>Beautiful floral arrangements</p>
                 </div>
             </div>
             <div class="gallery-item">
                 <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" alt="Concert Event">
                 <div class="gallery-overlay">
                     <h3>Live Concert Experience</h3>
-                    <p>Creating unforgettable musical moments</p>
+                    <p>Unforgettable musical moments</p>
                 </div>
             </div>
             <div class="gallery-item">
                 <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop" alt="Corporate Event">
                 <div class="gallery-overlay">
                     <h3>Corporate Gala</h3>
-                    <p>Sophisticated setup for business celebrations</p>
+                    <p>Sophisticated business celebrations</p>
                 </div>
             </div>
             <div class="gallery-item">
                 <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=2070&auto=format&fit=crop" alt="Birthday Party">
                 <div class="gallery-overlay">
                     <h3>Themed Birthday Party</h3>
-                    <p>Colorful celebration with personalized touches</p>
+                    <p>Colorful personalized touches</p>
                 </div>
             </div>
             <div class="gallery-item">
                 <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop" alt="Beach Wedding">
                 <div class="gallery-overlay">
                     <h3>Sunset Beach Wedding</h3>
-                    <p>Romantic ceremony by the ocean</p>
+                    <p>Romantic ocean ceremony</p>
                 </div>
             </div>
             <div class="gallery-item">
                 <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" alt="Cocktail Party">
                 <div class="gallery-overlay">
                     <h3>Elegant Cocktail Evening</h3>
-                    <p>Stylish setup for networking and celebration</p>
+                    <p>Stylish networking celebration</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Map Section -->
+    <section id="clients" class="clients">
+        <h2 class="section-heading">Our Clients</h2>
+        <p class="small-heading">Trusted by Amazing Brands Worldwide</p>
+        <div class="clients-container">
+            <div class="clients-slider" id="clientsSlider">
+                <div class="client-logo" style="transform: rotateY(0deg) translateZ(350px);">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" alt="Client 1">
+                </div>
+                <div class="client-logo" style="transform: rotateY(72deg) translateZ(350px);">
+                    <img src="https://images.unsplash.com/photo-1599305445671-946cb94c38f7?q=80&w=2070&auto=format&fit=crop" alt="Client 2">
+                </div>
+                <div class="client-logo" style="transform: rotateY(144deg) translateZ(350px);">
+                    <img src="https://images.unsplash.com/photo-1582005450386-52b25ae223d9?q=80&w=2070&auto=format&fit=crop" alt="Client 3">
+                </div>
+                <div class="client-logo" style="transform: rotateY(216deg) translateZ(350px);">
+                    <img src="https://images.unsplash.com/photo-1618221195710-dd2d5137a9db?q=80&w=2070&auto=format&fit=crop" alt="Client 4">
+                </div>
+                <div class="client-logo" style="transform: rotateY(288deg) translateZ(350px);">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" alt="Client 5">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <h2 class="section-heading">What Our Customers Say</h2>
+        <p class="small-heading">Hear From Those Who Experienced the Magic</p>
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <div class="testimonial-image">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop" alt="Sarah">
+                </div>
+                <div class="testimonial-content">
+                    <p>"Magic Kitchen turned our wedding into a fairytale! Every detail was perfect, and their creativity exceeded our wildest dreams."</p>
+                    <h3>Sarah & John</h3>
+                    <span>Wedding Client</span>
+                    <div class="testimonial-rating">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-image">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop" alt="Mark">
+                </div>
+                <div class="testimonial-content">
+                    <p>"The corporate event they managed was seamless and professional. Our guests couldn’t stop raving about it!"</p>
+                    <h3>Mark Thompson</h3>
+                    <span>Corporate Client</span>
+                    <div class="testimonial-rating">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-half-fill"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-image">
+                    <img src="https://images.unsplash.com/photo-1487412723647-3b35ae223d66?q=80&w=2070&auto=format&fit=crop" alt="Anita">
+                </div>
+                <div class="testimonial-content">
+                    <p>"Our beach wedding in Kerala was magical thanks to Magic Kitchen. The setting and vibe were absolutely perfect."</p>
+                    <h3>Anita Patel</h3>
+                    <span>Destination Wedding Client</span>
+                    <div class="testimonial-rating">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="map" class="map-section">
-        <h2>Find Us</h2>
+        <h2 class="section-heading">Find Us</h2>
         <div class="map-container">
-            <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3912.470996557545!2d76.24629647481297!3d11.300244288882174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba63d37a638bd67%3A0x8103c514b69b55a3!2sKitchen%20Magic%20Restaurant!5e0!3m2!1sfr!2sfr!4v1743263899851!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen="" loading="lazy"></iframe>
+            <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3912.470996557545!2d76.24629647481297!3d11.300244288882174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba63d37a638bd67%3A0x8103c514b69b55a3!2sKitchen%20Magic%20Restaurant!5e0!3m2!1sfr!2sfr!4v1743263899851!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             <div class="map-overlay">
                 <h3>Our Location</h3>
                 <p><i class="ri-map-pin-line"></i> 123 Event Street, Bangalore, India</p>
@@ -971,12 +1600,8 @@
         </div>
     </section>
 
-    <!-- Portfolio Section -->
-    
-
-    <!-- Contact Section -->
     <section id="contact" class="contact">
-        <h2>Contact Us</h2>
+        <h2 class="section-heading">Contact Us</h2>
         <form class="contact-form">
             <input type="text" placeholder="Your Name" required>
             <input type="email" placeholder="Your Email" required>
@@ -985,16 +1610,62 @@
         </form>
     </section>
 
-    <!-- Footer -->
     <footer>
-        <p>© 2025 Magic Kitchen. All Rights Reserved.</p>
+        <div class="footer-container">
+            <div class="footer-links">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="ri-map-pin-line"></i> Fist floor, ABR Arcade, LIC ROad, Nilambur, Kerala 679329</li>
+                    <li><i class="ri-phone-line"></i> +91 9876543210</li>
+                    <li><i class="ri-mail-line"></i> info@magickitchen.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Magic Kitchen. All Rights Reserved.</p>
+        </div>
     </footer>
 
+    <!-- WhatsApp Floating Button -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/919876543210" target="_blank" class="whatsapp-btn">
+            <i class="ri-whatsapp-line"></i>
+        </a>
+        <span class="whatsapp-tooltip">Chat with us on WhatsApp!</span>
+    </div>
+
     <script>
-        // Mobile Menu Toggle
+        // Page Loader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('pageLoader');
+            setTimeout(() => {
+                loader.classList.add('loader-hidden');
+            }, 1000);
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', e => {
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+
+        document.querySelectorAll('a, button, .service-card, .gallery-item, .client-logo, .testimonial-card, .whatsapp-float').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('expand');
+                follower.classList.add('expand');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('expand');
+                follower.classList.remove('expand');
+            });
+        });
+
+        // Navbar Toggle
         const navToggle = document.querySelector('.navbar-toggle');
         const navMenu = document.querySelector('.navbar-menu');
-
         navToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
         });
@@ -1002,42 +1673,52 @@
         // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Hero Slider
-        const slides = document.querySelectorAll('.hero-slide');
-        let currentSlide = 0;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        // Initial slide
-        showSlide(currentSlide);
-        
-        // Auto slide every 5 seconds
-        setInterval(nextSlide, 5000);
-
-        // Smooth Scrolling
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
             });
+        });
+
+        // Scroll Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.about-container, .services-grid, .gallery-container, .testimonials-container, .contact-form')
+            .forEach(el => observer.observe(el));
+
+        // Enhanced Magic Particles
+        const particleContainer = document.getElementById('magic-particles');
+        const particleCount = 30;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('magic-particle');
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 4}s`;
+            particle.style.animationDuration = `${3 + Math.random() * 3}s`;
+            particleContainer.appendChild(particle);
+        }
+
+        // Pause 3D Slider on Hover
+        const slider = document.getElementById('clientsSlider');
+        slider.addEventListener('mouseenter', () => {
+            slider.style.animationPlayState = 'paused';
+        });
+        slider.addEventListener('mouseleave', () => {
+            slider.style.animationPlayState = 'running';
         });
     </script>
 </body>
