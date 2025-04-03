@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magic Kitchen - Transforming Moments into Magic</title>
+    <!-- SEO Meta Tags -->
+    <title>Event Management Company in Nilambur, Kerala | Magic Kitchen</title>
+    <meta name="description" content="Magic Kitchen - Premier event management company in Nilambur, Kerala offering catering, dining arrangements, hosting, rental housing, stage decorations across Kerala & Tamil Nadu. Call 8281 77 66 22.">
+    <meta name="keywords" content="event management company Nilambur, Kerala, Magic Kitchen, catering services, dining arrangements, event hosting, rental housing, stage decorations, Kerala event planners, Tamil Nadu events">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Magic Kitchen">
+    <!-- Open Graph Tags for Social Media -->
+    <meta property="og:title" content="Event Management Company in Nilambur, Kerala | Magic Kitchen">
+    <meta property="og:description" content="Transform your events with Magic Kitchen's expert catering, hosting, and decoration services in Nilambur, Kerala. Contact us at 8281 77 66 22.">
+    <meta property="og:image" content="./images/magic.jpg">
+    <meta property="og:url" content="https://www.magickitchen.com">
+    <meta property="og:type" content="website">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../event/images/magic.jpg">
+    <!-- External Styles -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
         :root {
@@ -15,6 +29,7 @@
             --shadow-color: rgba(0, 0, 0, 0.1);
             --gradient: linear-gradient(45deg, #F28C38, #ff6b6b);
             --whatsapp-color: #25D366;
+            --pdf-color: #F28C38;
         }
 
         * {
@@ -36,14 +51,14 @@
             padding: 0;
         }
 
-        /* Page Loader */
+        /* Updated Page Loader for Cooking Events */
         .page-loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: #690d05;
+            background: #1a3c34;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -56,32 +71,34 @@
             pointer-events: none;
         }
 
-        .magic-loader {
-            width: 100px;
-            height: 100px;
+        .cooking-loader {
+            width: 120px;
+            height: 120px;
             position: relative;
             animation: spin 2s infinite linear;
         }
 
-        .magic-loader::before {
+        .cooking-loader::before {
             content: '';
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 4px solid transparent;
-            border-top-color: var(--secondary-color);
+            border: 5px solid transparent;
+            border-top-color: var(--primary-color);
             animation: spin 1.5s infinite ease;
         }
 
-        .magic-loader::after {
-            content: '✨ MAGIC KICHEN✨';
+        .cooking-loader::after {
+            content: '🍳 Magic Kitchen 🍳';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--secondary-color);
+            text-align: center;
+            font-weight: 600;
             animation: sparkleLoader 1s infinite;
         }
 
@@ -91,7 +108,7 @@
 
         @keyframes sparkleLoader {
             0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
 
@@ -290,7 +307,7 @@
             align-items: center;
             justify-content: center;
             color: white;
-            padding-top: 80px;
+            padding-top: 100px;
             overflow: hidden;
         }
 
@@ -426,7 +443,7 @@
 
         @keyframes sparkleEnhanced {
             0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
-            20% { transform: scale(1.3) rotate(90deg); opacity: 1; }
+            20% { transform: scale(1.3) rotate, rotate(90deg); opacity: 1; }
             80% { transform: scale(0.8) rotate(180deg); opacity: 0.8; }
             100% { transform: scale(0.5) rotate(360deg); opacity: 0; }
         }
@@ -518,6 +535,93 @@
         .about-content .btn-primary {
             align-self: flex-start;
             margin-top: 20px;
+        }
+
+        /* Why Choose Magic Kitchen Section */
+        .why-choose {
+            padding: 120px 0;
+            background: linear-gradient(135deg, #fff, #f9f9f9);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-choose-container {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .why-choose-card {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .why-choose-container.visible .why-choose-card {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .why-choose-card:nth-child(1) { transition-delay: 0.1s; }
+        .why-choose-card:nth-child(2) { transition-delay: 0.2s; }
+        .why-choose-card:nth-child(3) { transition-delay: 0.3s; }
+        .why-choose-card:nth-child(4) { transition-delay: 0.4s; }
+        .why-choose-card:nth-child(5) { transition-delay: 0.5s; }
+        .why-choose-card:nth-child(6) { transition-delay: 0.6s; }
+
+        .why-choose-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .why-choose-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .why-choose-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+        }
+
+        .why-choose-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .why-choose-card:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .why-choose-card h3 {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .why-choose-card p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
         }
 
         /* Services Section */
@@ -644,10 +748,9 @@
             transform: scale(1.1) translateZ(50px);
         }
 
-       
-        .food1 { transform: translateZ(50px); background-image: url('./images/3D.webp'); }
-        .food2 { transform: translateZ(100px) rotateY(45deg); background-image: url('./images/3D1.webp'); }
-        .food3 { transform: translateZ(150px) rotateY(-45deg); background-image: url('./images/3D3.webp'); }
+        .food1 { transform: translateZ(50px); background-image: url('../event/images/3D.webp'); }
+        .food2 { transform: translateZ(100px) rotateY(45deg); background-image: url('../event/images/3D1.webp'); }
+        .food3 { transform: translateZ(150px) rotateY(-45deg); background-image: url('../event/images/3D3.webp'); }
 
         @keyframes rotateModel {
             0% { transform: rotateY(0deg) rotateX(20deg); }
@@ -717,7 +820,7 @@
             width: 100%;
             height: 4px;
             background: var(--gradient);
-            transform: scaleX(0);
+            transform: WscaleX(0);
             transform-origin: left;
             transition: transform 0.5s ease;
         }
@@ -1165,12 +1268,19 @@
             color: #bbb;
         }
 
-        /* WhatsApp Floating Button */
-        .whatsapp-float {
+        /* Floating Buttons Container */
+        .floating-buttons {
             position: fixed;
             bottom: 30px;
             right: 30px;
             z-index: 1000;
+            display: flex;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
             transition: all 0.3s ease;
         }
 
@@ -1212,6 +1322,54 @@
         }
 
         .whatsapp-float:hover .whatsapp-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-10px);
+        }
+
+        /* PDF Download Floating Button */
+        .pdf-float {
+            transition: all 0.3s ease;
+        }
+
+        .pdf-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: var(--pdf-color);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pdf-btn i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .pdf-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .pdf-tooltip {
+            position: absolute;
+            right: 70px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-float:hover .pdf-tooltip {
             opacity: 1;
             visibility: visible;
             transform: translateX(-10px);
@@ -1284,6 +1442,7 @@
                 align-self: center;
             }
 
+            .why-choose-container,
             .services-grid,
             .gallery-container,
             .testimonials-container {
@@ -1324,21 +1483,26 @@
                 justify-content: center;
             }
 
-            .whatsapp-float {
+            .floating-buttons {
                 bottom: 20px;
                 right: 20px;
+                flex-direction: column;
+                gap: 10px;
             }
-            
-            .whatsapp-btn {
+
+            .whatsapp-btn,
+            .pdf-btn {
                 width: 50px;
                 height: 50px;
             }
-            
-            .whatsapp-btn i {
+
+            .whatsapp-btn i,
+            .pdf-btn i {
                 font-size: 1.8rem;
             }
-            
-            .whatsapp-float:hover .whatsapp-tooltip {
+
+            .whatsapp-float:hover .whatsapp-tooltip,
+            .pdf-float:hover .pdf-tooltip {
                 display: none;
             }
         }
@@ -1347,16 +1511,17 @@
 <body>
     <!-- Page Loader -->
     <div class="page-loader" id="pageLoader">
-        <div class="magic-loader"></div>
+        <div class="cooking-loader"></div>
     </div>
 
     <!-- Custom Cursor -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
+    <!-- Navbar -->
     <nav class="navbar">
         <a href="#" class="navbar-logo">
-            <img src="./images/magic.jpg" alt="Magic Kitchen Logo">
+            <img src="./images/magic.jpg" alt="Magic Kitchen Event Management Logo">
             <span>Magic Kitchen</span>
         </a>
         <button class="navbar-toggle" aria-label="Toggle Menu">
@@ -1364,7 +1529,7 @@
         </button>
         <ul class="navbar-menu">
             <li><a href="#home"><i class="ri-home-line"></i>Home</a></li>
-            <li><a href="#about"><i class="ri-info-line"></i>About</a></li>
+            <li><a href="#about"><i class="ri-group-line"></i>About</a></li>
             <li><a href="#services"><i class="ri-service-line"></i>Services</a></li>
             <li><a href="#food-model"><i class="ri-restaurant-line"></i>Culinary</a></li>
             <li><a href="#gallery"><i class="ri-image-line"></i>Gallery</a></li>
@@ -1374,75 +1539,117 @@
         </ul>
     </nav>
 
+    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-video">
             <video autoplay muted loop playsinline class="hero-video-bg">
                 <source src="./images/VIDEO3.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <div class="hero-overlay"></div>
         </div>
         <div class="hero-content">
-            <h1>Magic Kitchen: Crafting Extraordinary Experiences</h1>
+            <h1>Event Management Company in Nilambur, Kerala</h1>
+            <p>Magic Kitchen: Crafting Extraordinary Events Across Kerala & Tamil Nadu</p>
             <div class="hero-social">
-                <a href="#" target="_blank" class="social-icon facebook"><i class="ri-facebook-fill"></i></a>
-                <a href="#" target="_blank" class="social-icon instagram"><i class="ri-instagram-line"></i></a>
+                <a href="https://www.facebook.com/magickitchenevent/" target="_blank" class="social-icon facebook"><i class="ri-facebook-fill"></i></a>
+                <a href="https://www.instagram.com/_magic_kitchen/" target="_blank" class="social-icon instagram"><i class="ri-instagram-line"></i></a>
                 <a href="#" target="_blank" class="social-icon linkedin"><i class="ri-linkedin-fill"></i></a>
             </div>
         </div>
     </section>
 
+    <!-- About Section -->
     <section id="about" class="about">
-        <h2 class="section-heading">Our Magic Kitchen Story</h2>
+        <h2 class="section-heading">About Magic Kitchen - Event Management in Nilambur</h2>
         <div class="magic-particles" id="magic-particles"></div>
         <div class="about-container">
             <div class="about-image">
-                <img src="https://images.pexels.com/photos/3947955/pexels-photo-3947955.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Magic Kitchen Team">
+                <img src="https://images.pexels.com/photos/3947955/pexels-photo-3947955.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Magic Kitchen Event Management Team in Nilambur">
             </div>
             <div class="about-content">
-                <p>At Magic Kitchen, we believe that great food and beautiful celebrations bring people together. Our journey began with a passion for creating unforgettable dining experiences, and over the years, we have grown into a trusted name in catering, event hosting, and decorations. Nestled in Nilambur, Kerala, our team is dedicated to bringing a touch of magic to every occasion. Whether it’s an intimate gathering or a grand celebration, we ensure top-quality service, exquisite flavors, and elegant arrangements.</p>
-                <a href="#contact" class="btn-primary">Start Your Journey</a>
+                <p>Magic Kitchen is a leading <strong>event management company in Nilambur, Kerala</strong>, specializing in catering, dining arrangements, hosting, rental housing, and stage decorations. Serving all of Kerala and Tamil Nadu, we bring creativity and excellence to every event. Call us at <strong>8281 77 66 22</strong> to plan your next celebration!</p>
+                <a href="#contact" class="btn-primary">Contact Us Today</a>
             </div>
         </div>
     </section>
 
+    <!-- Why Choose Section -->
+    <section id="why-choose" class="why-choose">
+        <h2 class="section-heading">Why Choose Magic Kitchen</h2>
+        <p class="small-heading">Discover What Sets Us Apart</p>
+        <div class="why-choose-container">
+            <div class="why-choose-card">
+                <i class="ri-global-line"></i>
+                <h3>Worldwide Menu</h3>
+                <p>Indulge in a diverse selection of global cuisines, crafted to satisfy every palate with authentic flavors from around the world.</p>
+            </div>
+            <div class="why-choose-card">
+                <i class="ri-star-line"></i>
+                <h3>International Quality</h3>
+                <p>We adhere to the highest international standards, ensuring every dish and service reflects premium quality and excellence.</p>
+            </div>
+            <div class="why-choose-card">
+                <i class="ri-magic-line"></i>
+                <h3>Exclusive Magic Menu</h3>
+                <p>Experience our signature dishes, uniquely designed to surprise and delight with a touch of culinary magic.</p>
+            </div>
+            <div class="why-choose-card">
+                <i class="ri-user-star-line"></i>
+                <h3>Experienced Chefs</h3>
+                <p>Our team of seasoned chefs brings years of expertise, passion, and creativity to every meal they prepare.</p>
+            </div>
+            <div class="why-choose-card">
+                <i class="ri-lightbulb-line"></i>
+                <h3>Innovative Dining Experience</h3>
+                <p>Enjoy a one-of-a-kind dining adventure with inventive presentations and flavors that redefine culinary artistry.</p>
+            </div>
+            <div class="why-choose-card">
+                <i class="ri-tools-line"></i>
+                <h3>Premier Equipment</h3>
+                <p>We utilize state-of-the-art tools and technology to deliver flawless execution and exceptional results every time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
     <section id="services" class="services">
-        <h2 class="section-heading">Services by Magic Kitchen</h2>
-        <p class="small-heading">Crafting Events with a Touch of Magic</p>
+        <h2 class="section-heading">Our Event Management Services</h2>
+        <p class="small-heading">Catering, Hosting, and More Across Kerala & Tamil Nadu</p>
         <div class="services-grid">
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=2070&auto=format&fit=crop" alt="Corporate Event Management">
-                <h3>Corporate Event Management</h3>
-                <p>Professional gatherings to elevate your brand.</p>
+                <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=2070&auto=format&fit=crop" alt="Catering Services in Nilambur">
+                <h3>Catering Services</h3>
+                <p>Delicious menus tailored to your event needs.</p>
             </div>
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1524777313293-86d2ab467344?q=80&w=2070&auto=format&fit=crop" alt="Wedding Planners">
-                <h3>Wedding Planners</h3>
-                <p>Turning your dream wedding into reality.</p>
+                <img src="https://images.unsplash.com/photo-1524777313293-86d2ab467344?q=80&w=2070&auto=format&fit=crop" alt="Dining and Arrangements in Kerala">
+                <h3>Dining & Arrangements</h3>
+                <p>Elegant setups for a memorable dining experience.</p>
             </div>
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1629744418692-345355518e78?q=80&w=2070&auto=format&fit=crop" alt="Destination Wedding">
-                <h3>Destination Wedding</h3>
-                <p>Exotic weddings in stunning landscapes.</p>
+                <img src="https://images.unsplash.com/photo-1629744418692-345355518e78?q=80&w=2070&auto=format&fit=crop" alt="Event Hosting in Kerala">
+                <h3>Event Hosting</h3>
+                <p>Professional hosting to keep your event seamless.</p>
             </div>
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2070&auto=format&fit=crop" alt="Private Parties">
-                <h3>Private Parties</h3>
-                <p>Unforgettable customized celebrations.</p>
+                <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2070&auto=format&fit=crop" alt="Rental Housing for Events">
+                <h3>Rental Housing</h3>
+                <p>Comfortable accommodations for your guests.</p>
             </div>
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1629744418692-345355518e78?q=80&w=2070&auto=format&fit=crop" alt="Beach Weddings">
-                <h3>Beach Weddings</h3>
-                <p>Romantic seaside ceremonies.</p>
+                <img src="https://images.unsplash.com/photo-1629744418692-345355518e78?q=80&w=2070&auto=format&fit=crop" alt="Stage Decorations in Kerala">
+                <h3>Stage & Decorations</h3>
+                <p>Stunning decor to elevate your event.</p>
             </div>
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=2070&auto=format&fit=crop" alt="Music & Entertainment">
-                <h3>Music & Entertainment</h3>
-                <p>Top-tier performances for your event.</p>
+                <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=2070&auto=format&fit=crop" alt="Events Across Kerala & Tamil Nadu">
+                <h3>All Kerala & Tamil Nadu</h3>
+                <p>Comprehensive event services across regions.</p>
             </div>
         </div>
     </section>
 
+    <!-- Food Model Section -->
     <section id="food-model" class="food-model-section">
         <h2 class="section-heading">Our Culinary Magic</h2>
         <p class="small-heading">Experience Our Craft in 3D</p>
@@ -1456,54 +1663,56 @@
         </div>
     </section>
 
+    <!-- Gallery Section -->
     <section id="gallery" class="gallery">
         <h2 class="section-heading">Our Gallery</h2>
         <div class="gallery-container">
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=2070&auto=format&fit=crop" alt="Wedding Decoration">
+                <img src="./images/gallery1.jpg" alt="Wedding Decoration by Magic Kitchen">
                 <div class="gallery-overlay">
-                    <h3>Elegant Wedding Setup</h3>
-                    <p>Beautiful floral arrangements</p>
+                    <h3>Magic Broast</h3>
+                    <p>A Taste of Magic!</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" alt="Concert Event">
+                <img src="./images/gallery2.jpg" alt="Event Catering in Nilambur">
                 <div class="gallery-overlay">
-                    <h3>Live Concert Experience</h3>
-                    <p>Unforgettable musical moments</p>
+                    <h3>Flavors with a Touch of Magic!</h3>
+                    <p>Sip, savor, and enjoy the warmth of magical blends.</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop" alt="Corporate Event">
+                <img src="./images/gallery3.jpg" alt="Corporate Event Management">
                 <div class="gallery-overlay">
-                    <h3>Corporate Gala</h3>
-                    <p>Sophisticated business celebrations</p>
+                    <h3>Elegant Celebrations</h3>
+                    <p>A dreamy setup filled with flowers, lights, and love.</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=2070&auto=format&fit=crop" alt="Birthday Party">
+                <img src="./images/gallery4.jpg" alt="Birthday Party Arrangements">
                 <div class="gallery-overlay">
-                    <h3>Themed Birthday Party</h3>
-                    <p>Colorful personalized touches</p>
+                    <h3>Magic Dining</h3>
+                    <p>A beautifully set table for a delightful dining experience.</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop" alt="Beach Wedding">
+                <img src="./images/gallery5.jpg" alt="Beach Wedding Decorations">
                 <div class="gallery-overlay">
-                    <h3>Sunset Beach Wedding</h3>
-                    <p>Romantic ocean ceremony</p>
+                    <h3>Grand Buffet Spread</h3>
+                    <p>A lavish selection of delicacies, elegantly arranged.</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" alt="Cocktail Party">
+                <img src="./images/gallery6.jpg" alt="Cocktail Party Setup">
                 <div class="gallery-overlay">
-                    <h3>Elegant Cocktail Evening</h3>
-                    <p>Stylish networking celebration</p>
+                    <h3>Rustic Bar Setup</h3>
+                    <p>A charming open-air bar with warm lights and decor.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Clients Section -->
     <section id="clients" class="clients">
         <h2 class="section-heading">Our Clients</h2>
         <p class="small-heading">Trusted by Amazing Brands Worldwide</p>
@@ -1528,6 +1737,7 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials">
         <h2 class="section-heading">What Our Customers Say</h2>
         <p class="small-heading">Hear From Those Who Experienced the Magic</p>
@@ -1568,7 +1778,7 @@
             </div>
             <div class="testimonial-card">
                 <div class="testimonial-image">
-                    <img src="https://images.unsplash.com/photo-1487412723647-3b35ae223d66?q=80&w=2070&auto=format&fit=crop" alt="Anita">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS18r4NC_pzJ3KV6wbdcWLAe3k-2j8zi7XMzQ&s" alt="Anita">
                 </div>
                 <div class="testimonial-content">
                     <p>"Our beach wedding in Kerala was magical thanks to Magic Kitchen. The setting and vibe were absolutely perfect."</p>
@@ -1586,54 +1796,100 @@
         </div>
     </section>
 
+    <!-- Map Section -->
     <section id="map" class="map-section">
         <h2 class="section-heading">Find Us</h2>
         <div class="map-container">
-            <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3912.470996557545!2d76.24629647481297!3d11.300244288882174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba63d37a638bd67%3A0x8103c514b69b55a3!2sKitchen%20Magic%20Restaurant!5e0!3m2!1sfr!2sfr!4v1743263899851!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3912.8527578488824!2d76.2211258!3d11.2722321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba63b9e4db80e27%3A0xf1ff86c0f625f370!2sMagic%20Kitchen!5e0!3m2!1sen!2sin!4v1743580899049!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             <div class="map-overlay">
                 <h3>Our Location</h3>
-                <p><i class="ri-map-pin-line"></i> 123 Event Street, Bangalore, India</p>
-                <p><i class="ri-phone-line"></i> +91 9876543210</p>
+                <p><i class="ri-map-pin-line"></i> First Floor, ABR Arcade, LIC Road, Nilambur, Kerala 679329</p>
+                <p><i class="ri-phone-line"></i> +918281776622</p>
                 <p><i class="ri-mail-line"></i> info@magickitchen.com</p>
                 <a href="https://goo.gl/maps/svkwazY" target="_blank" class="btn-primary">Get Directions</a>
             </div>
         </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact" class="contact">
-        <h2 class="section-heading">Contact Us</h2>
+        <h2 class="section-heading">Contact Magic Kitchen</h2>
+        <p class="small-heading">Reach Out for Event Management in Nilambur</p>
         <form class="contact-form">
             <input type="text" placeholder="Your Name" required>
             <input type="email" placeholder="Your Email" required>
             <textarea placeholder="Your Message" required></textarea>
             <button type="submit" class="btn-primary">Send Message</button>
         </form>
+        <p>Call us at: <strong>8281 77 66 22</strong></p>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-container">
             <div class="footer-links">
                 <h3>Contact Info</h3>
                 <ul>
-                    <li><i class="ri-map-pin-line"></i> Fist floor, ABR Arcade, LIC ROad, Nilambur, Kerala 679329</li>
-                    <li><i class="ri-phone-line"></i> +91 9876543210</li>
-                    <li><i class="ri-mail-line"></i> info@magickitchen.com</li>
+                    <li><i class="ri-map-pin-line"></i> First Floor, ABR Arcade, LIC Road, Nilambur, Kerala 679329</li>
+                    <li><i class="ri-phone-line"></i> +918281776622</li>
+                    <li><i class="ri-mail-line"></i> magic.kitchens77@gmail.com</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Magic Kitchen. All Rights Reserved.</p>
+            <p>© 2025 Magic Kitchen - Event Management Company in Nilambur, Kerala. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- WhatsApp Floating Button -->
-    <div class="whatsapp-float">
-        <a href="https://wa.me/919876543210" target="_blank" class="whatsapp-btn">
-            <i class="ri-whatsapp-line"></i>
-        </a>
-        <span class="whatsapp-tooltip">Chat with us on WhatsApp!</span>
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <div class="whatsapp-float">
+            <a href="https://wa.me/918281776622" target="_blank" class="whatsapp-btn">
+                <i class="ri-whatsapp-line"></i>
+            </a>
+            <span class="whatsapp-tooltip">Chat with us on WhatsApp!</span>
+        </div>
+        <div class="pdf-float">
+            <a href="./images/Magic Kitchen E-Brochure.pdf" download class="pdf-btn">
+                <i class="ri-file-download-line"></i>
+            </a>
+            <span class="pdf-tooltip">Download Our Brochure</span>
+        </div>
     </div>
 
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Magic Kitchen",
+        "description": "Event management company in Nilambur, Kerala offering catering, dining arrangements, hosting, rental housing, and stage decorations across Kerala and Tamil Nadu.",
+        "telephone": "+918281776622",
+        "email": "magic.kitchens77@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "First Floor, ABR Arcade, LIC Road",
+            "addressLocality": "Nilambur",
+            "addressRegion": "Kerala",
+            "postalCode": "679329",
+            "addressCountry": "IN"
+        },
+        "url": "https://www.magickitchen.com",
+        "openingHours": "Mo-Su 09:00-18:00",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 11.300244,
+            "longitude": 76.246296
+        },
+        "sameAs": [
+            "https://www.facebook.com/magickitchenevent/",
+            "https://www.instagram.com/_magic_kitchen/",
+            "https://www.linkedin.com/company/magickitchen"
+        ]
+    }
+    </script>
+
+    <!-- JavaScript -->
     <script>
         // Page Loader
         window.addEventListener('load', () => {
@@ -1652,7 +1908,7 @@
             follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
         });
 
-        document.querySelectorAll('a, button, .service-card, .gallery-item, .client-logo, .testimonial-card, .whatsapp-float').forEach(el => {
+        document.querySelectorAll('a, button, .service-card, .gallery-item, .client-logo, .testimonial-card, .whatsapp-float, .pdf-float, .why-choose-card').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.classList.add('expand');
                 follower.classList.add('expand');
@@ -1695,7 +1951,7 @@
             });
         }, { threshold: 0.2 });
 
-        document.querySelectorAll('.about-container, .services-grid, .gallery-container, .testimonials-container, .contact-form')
+        document.querySelectorAll('.about-container, .why-choose-container, .services-grid, .gallery-container, .testimonials-container, .contact-form')
             .forEach(el => observer.observe(el));
 
         // Enhanced Magic Particles
